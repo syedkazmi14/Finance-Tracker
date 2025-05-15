@@ -1,5 +1,5 @@
 from models import add_transaction, get_all_transactions
-from reports import get_summary
+from reports import get_summary, plot_income_vs_expense, plot_expenses_by_category
 from db import create_tables
 from utils import validate_date
 
@@ -10,7 +10,9 @@ def main_menu():
         print("1. Add Transaction")
         print("2. View All Transactions")
         print("3. View Summary")
-        print("4. Exit")
+        print("4. Visualize Income vs Expenses")
+        print("5. Visualize Expenses by Category")
+        print("6. Exit")
 
         choice = input("Choose an option: ")
 
@@ -40,10 +42,13 @@ def main_menu():
             print(f"Balance: {summary['balance']}")
 
         elif choice == "4":
+            plot_income_vs_expense()
+
+        elif choice == "5":
+            plot_expenses_by_category()
+
+        elif choice == "6":
             print("Exiting...")
             break
         else:
             print("Invalid choice.")
-
-if __name__ == "__main__":
-    main_menu()
