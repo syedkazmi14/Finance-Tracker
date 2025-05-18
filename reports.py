@@ -1,5 +1,8 @@
 import matplotlib.pyplot as plt
 from db import get_connection
+import os
+
+STATIC_DIR = "static/charts"
 
 def get_summary():
     conn = get_connection()
@@ -17,18 +20,21 @@ def get_summary():
     return {"income": income, "expenses": expenses, "balance": balance}
 
 
-def plot_income_vs_expense():
+def save_income_vs_expense_chart():
     summary = get_summary()
     labels = ["Income", "Expenses"]
     values = [summary["income"], summary["expenses"]]
 
-    plt.bar(labels, values)
+    plt.bar(labels, values, color=["green", "red"])
     plt.title("Income vs Expenses")
     plt.ylabel("Amount")
-    plt.show()
+
+    os.makedirs(STATIC_DIR, exist_ok=True)
+    plt.savefig(os.path.join(STATIC_DIR, "income_vs_expense.png"))
+    plt.close()
 
 
-def plot_expenses_by_category():
+def save_expenses_by_category_chart():
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -37,7 +43,6 @@ def plot_expenses_by_category():
     conn.close()
 
     if not data:
-        print("No expenses recorded yet.")
         return
 
     categories = [row[0] for row in data]
@@ -45,4 +50,7 @@ def plot_expenses_by_category():
 
     plt.pie(amounts, labels=categories, autopct="%1.1f%%", startangle=90)
     plt.title("Expenses by Category")
-    plt.show()
+
+    os.makedirs(STATIC_DIR, exist_ok=True)
+    plt.savefig(os.path.join(STATIC_DIR, "expenses_by_category.png"))
+    plt.close()
