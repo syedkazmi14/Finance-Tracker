@@ -14,3 +14,22 @@
     <button type="submit" class="btn btn-primary">Filter</button>
 </form>
 
+{% if results %}
+<h3>Results</h3>
+<table class="table table-striped">
+  <tr>
+    <th>ID</th><th>Type</th><th>Category</th><th>Amount</th><th>Date</th><th>Description</th>
+  </tr>
+  {% for r in results %}
+  <tr>
+    <td>{{ r[0] }}</td>
+    <td>{{ r[1] }}</td>
+    <td>{{ r[2] }}</td>
+    <td>{{ r[3] }}</td>
+    <td>{{ r[4] }}</td>
+    <td>{{ r[5] }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+{% endblock %}
